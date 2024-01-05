@@ -101,3 +101,13 @@ const consoleLogMiddleware = t.middleware(({ ctx, next }) => {
 });
 
 export const logProcedure = t.procedure.use(consoleLogMiddleware);
+
+// using middleware after the procedure
+const timingMiddleware = t.middleware(async ({ ctx, next }) => {
+  console.time("timingMiddleware");
+  const result = await next({ ctx });
+  console.timeEnd("timingMiddleware");
+  return result;
+});
+
+export const timedProcedure = t.procedure.use(timingMiddleware);

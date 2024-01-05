@@ -5,8 +5,8 @@ import { api } from "~/utils/api";
 
 export default function Home() {
   const hello = api.post.hello.useQuery({ text: "from tRPC Public Procedure" });
-  const helloLog = api.post.helloLog.useQuery({
-    text: "from tRPC Log Procedure",
+  const helloTimingMiddleware = api.post.experiment.useQuery({
+    text: "from tRPC Timing Middleware",
   });
 
   return (
@@ -49,7 +49,9 @@ export default function Home() {
             {hello.data ? hello.data.greeting : "Loading tRPC query..."}
           </p>
           <p className="text-2xl text-white">
-            {helloLog.data ? helloLog.data.greeting : "Loading tRPC query..."}
+            {helloTimingMiddleware.data
+              ? helloTimingMiddleware.data.greeting
+              : "Loading tRPC query..."}
           </p>
         </div>
       </main>
