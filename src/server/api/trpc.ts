@@ -93,3 +93,11 @@ export const createTRPCRouter = t.router;
  * are logged in.
  */
 export const publicProcedure = t.procedure;
+
+// using middleware before the procedure
+const consoleLogMiddleware = t.middleware(({ ctx, next }) => {
+  console.log("In the middleware");
+  return next({ ctx });
+});
+
+export const logProcedure = t.procedure.use(consoleLogMiddleware);

@@ -22,6 +22,7 @@ import { createTRPCContext } from "~/server/api/trpc";
 // slightly simplified NextJS Api handler
 const nextApiHandler = createNextApiHandler({
   router: appRouter,
+  // Context is anyting we want to have available in all of our procedures
   createContext: createTRPCContext,
   onError:
     env.NODE_ENV === "development"
