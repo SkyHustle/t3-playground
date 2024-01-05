@@ -7,7 +7,16 @@ import {
 } from "~/server/api/trpc";
 
 export const postRouter = createTRPCRouter({
-  hello: logProcedure
+  hello: publicProcedure
+    .input(z.object({ text: z.string() }))
+    .query(({ ctx, input }) => {
+      console.log(Object.keys(ctx));
+      return {
+        greeting: `Hello ${input.text}`,
+      };
+    }),
+
+  helloLog: logProcedure
     .input(z.object({ text: z.string() }))
     .query(({ ctx, input }) => {
       console.log(Object.keys(ctx));
