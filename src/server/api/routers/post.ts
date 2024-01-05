@@ -1,11 +1,6 @@
-import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
-import {
-  createTRPCRouter,
-  publicProcedure,
-  timedProcedure,
-} from "~/server/api/trpc";
+import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 export const postRouter = createTRPCRouter({
   // These are all procedures that are available on the postRouter
@@ -13,21 +8,6 @@ export const postRouter = createTRPCRouter({
     .input(z.object({ text: z.string() }))
     .query(({ ctx, input }) => {
       console.log(Object.keys(ctx));
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
-
-  experiment: timedProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ ctx, input }) => {
-      console.log(Object.keys(ctx));
-      if (Math.random() < 0.5) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Something went wrong",
-        });
-      }
       return {
         greeting: `Hello ${input.text}`,
       };
