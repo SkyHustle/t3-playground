@@ -18,7 +18,7 @@ export default function Home() {
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           {user.isSignedIn ? <SignOutButton /> : <SignInButton />}
         </div>
-        {data?.map((post) => <div key="post.id">{post.content}</div>)}
+        {data?.map((post) => <div key={post.id}>{post.content}</div>)}
       </main>
     </>
   );
