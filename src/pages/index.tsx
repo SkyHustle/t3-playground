@@ -48,7 +48,7 @@ export default function Home() {
             )}
           </div>
           <div className="flex flex-col">
-            {data?.map((post) => (
+            {data?.map(({ post }) => (
               <div className="border-b border-slate-400 p-8" key={post.id}>
                 {post.content}
               </div>
