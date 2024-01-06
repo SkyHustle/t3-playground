@@ -1,7 +1,24 @@
-import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
+import { SignInButton, useUser, UserButton } from "@clerk/nextjs";
 import Head from "next/head";
-
 import { api } from "~/utils/api";
+
+const CreatePost = () => {
+  const { user } = useUser();
+
+  if (!user) {
+    return null;
+  }
+
+  return (
+    <div className="flex w-full gap-3 ">
+      <UserButton />
+      <input
+        placeholder="Type some emojis"
+        className="grow border border-slate-400 bg-transparent px-3"
+      />
+    </div>
+  );
+};
 
 export default function Home() {
   const user = useUser();
@@ -21,7 +38,9 @@ export default function Home() {
         <div className="h-full w-full border-x border-slate-400 md:max-w-2xl">
           <div className="flex border-b border-slate-400 p-4">
             {user.isSignedIn ? (
-              <SignOutButton />
+              <div>
+                <CreatePost />
+              </div>
             ) : (
               <div className="flex justify-center">
                 <SignInButton />
