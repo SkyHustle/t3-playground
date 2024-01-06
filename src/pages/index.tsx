@@ -1,6 +1,6 @@
 import { SignInButton, useUser, UserButton } from "@clerk/nextjs";
 import Head from "next/head";
-import { api } from "~/utils/api";
+import { RouterOutputs, api } from "~/utils/api";
 
 const CreatePost = () => {
   const { user } = useUser();
@@ -16,6 +16,17 @@ const CreatePost = () => {
         placeholder="Type some emojis"
         className="grow border border-slate-400 bg-transparent px-3"
       />
+    </div>
+  );
+};
+
+type PostWithUser = RouterOutputs["post"]["getAll"][number];
+
+const PostView = (props: PostWithUser) => {
+  const { post, author } = props;
+  return (
+    <div key={post.id} className="border-b border-slate-400 p-4">
+      {post.content}
     </div>
   );
 };
@@ -48,10 +59,8 @@ export default function Home() {
             )}
           </div>
           <div className="flex flex-col">
-            {data?.map(({ post }) => (
-              <div className="border-b border-slate-400 p-8" key={post.id}>
-                {post.content}
-              </div>
+            {data?.map((fullPost) => (
+              <PostView {...fullPost} key={fullPost.post.id} />
             ))}
           </div>
         </div>

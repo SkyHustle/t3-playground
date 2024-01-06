@@ -1,6 +1,6 @@
 import type { User } from "@clerk/nextjs/api";
 import { clerkClient } from "@clerk/nextjs/server";
-import { z } from "zod";
+// import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
@@ -25,8 +25,6 @@ export const postRouter = createTRPCRouter({
         limit: 100,
       })
     ).map(filterUserForClient);
-
-    console.log(users);
 
     return posts.map((post) => ({
       post,
