@@ -5,10 +5,15 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "next/image";
 import { LoadingSpinner } from "~/components/LoadingSpinner";
+import { useState } from "react";
 dayjs.extend(relativeTime);
 
 const CreatePost = () => {
   const { user } = useUser();
+
+  const [input, setInput] = useState("");
+
+  const { mutate } = api.post.create.useMutation();
 
   if (!user) {
     return null;
@@ -20,7 +25,19 @@ const CreatePost = () => {
       <input
         placeholder="Type some emojis"
         className="grow border border-slate-400 bg-transparent px-3"
+        type="text"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
       />
+      <button
+        className="border border-slate-400 bg-transparent px-3"
+        onClick={() => {
+          mutate({ content: input, authorId: user.id });
+          setInput("");
+        }}
+      >
+        Post
+      </button>
     </div>
   );
 };
