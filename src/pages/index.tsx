@@ -1,6 +1,6 @@
 import { SignInButton, useUser, UserButton } from "@clerk/nextjs";
 import Head from "next/head";
-import { RouterOutputs, api } from "~/utils/api";
+import { type RouterOutputs, api } from "~/utils/api";
 
 const CreatePost = () => {
   const { user } = useUser();
@@ -24,9 +24,25 @@ type PostWithUser = RouterOutputs["post"]["getAll"][number];
 
 const PostView = (props: PostWithUser) => {
   const { post, author } = props;
+  const createdAt = new Date(post.createdAt);
+  const formattedDate = `${createdAt.toLocaleString("default", {
+    month: "long",
+  })} ${createdAt.getDate()}, ${createdAt.getFullYear()}`;
+
   return (
-    <div key={post.id} className="border-b border-slate-400 p-4">
-      {post.content}
+    <div key={post.id} className="flex gap-3 border-b border-slate-400 p-4">
+      <img
+        src={author.profileImageUrl}
+        alt="Profile Image"
+        className="h-12 w-12 rounded-full"
+      />
+      <div className="flex flex-col">
+        <div className="flex gap-1 text-slate-300">
+          <span>{`@${author.username}`}</span>
+          <span className="font-thin">{`· ${formattedDate} `}</span>
+        </div>
+        <span>{post.content}</span>
+      </div>
     </div>
   );
 };
