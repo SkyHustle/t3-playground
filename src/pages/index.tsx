@@ -4,6 +4,7 @@ import { type RouterOutputs, api } from "~/utils/api";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "next/image";
+import { LoadingSpinner } from "~/components/LoadingSpinner";
 dayjs.extend(relativeTime);
 
 const CreatePost = () => {
@@ -55,7 +56,7 @@ export default function Home() {
   const user = useUser();
   const { data, isLoading } = api.post.getAll.useQuery();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingSpinner size={60} />;
   if (!data) return <div>Something went wrong...</div>;
 
   return (
