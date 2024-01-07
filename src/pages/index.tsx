@@ -3,6 +3,7 @@ import Head from "next/head";
 import { type RouterOutputs, api } from "~/utils/api";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import Image from "next/image";
 dayjs.extend(relativeTime);
 
 const CreatePost = () => {
@@ -30,7 +31,9 @@ const PostView = (props: PostWithUser) => {
 
   return (
     <div key={post.id} className="flex gap-3 border-b border-slate-400 p-4">
-      <img
+      <Image
+        width={48}
+        height={48}
         src={author.profileImageUrl}
         alt="Profile Image"
         className="h-12 w-12 rounded-full"
