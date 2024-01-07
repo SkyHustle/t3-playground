@@ -51,7 +51,6 @@ export const postRouter = createTRPCRouter({
     .input(
       z.object({
         content: z.string().emoji().min(1).max(280),
-        authorId: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {

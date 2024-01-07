@@ -32,7 +32,7 @@ const CreatePost = () => {
       <button
         className="border border-slate-400 bg-transparent px-3"
         onClick={() => {
-          mutate({ content: input, authorId: user.id });
+          mutate({ content: input });
           setInput("");
         }}
       >
