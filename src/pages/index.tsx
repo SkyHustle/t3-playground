@@ -52,12 +52,25 @@ const PostView = (props: PostWithUser) => {
   );
 };
 
-export default function Home() {
-  const user = useUser();
+const Feed = () => {
   const { data, isLoading } = api.post.getAll.useQuery();
 
   if (isLoading) return <LoadingSpinner size={60} />;
   if (!data) return <div>Something went wrong...</div>;
+
+  return (
+    <div className="flex flex-col">
+      {data?.map((fullPost) => (
+        <PostView {...fullPost} key={fullPost.post.id} />
+      ))}
+    </div>
+  );
+};
+
+export default function Home() {
+  const { isSignedIn } = useUser();
+  // will be cached by react-query
+  api.post.getAll.useQuery();
 
   return (
     <>
@@ -69,7 +82,7 @@ export default function Home() {
       <main className="flex h-screen justify-center">
         <div className="h-full w-full border-x border-slate-400 md:max-w-2xl">
           <div className="flex border-b border-slate-400 p-4">
-            {user.isSignedIn ? (
+            {isSignedIn ? (
               <div>
                 <CreatePost />
               </div>
@@ -79,11 +92,7 @@ export default function Home() {
               </div>
             )}
           </div>
-          <div className="flex flex-col">
-            {data?.map((fullPost) => (
-              <PostView {...fullPost} key={fullPost.post.id} />
-            ))}
-          </div>
+          <Feed />
         </div>
       </main>
     </>

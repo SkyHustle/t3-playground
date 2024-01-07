@@ -1,7 +1,7 @@
 export const LoadingSpinner = ({ size = 16 }: { size?: number }) => {
   return (
     <div
-      className="absolute flex h-screen w-screen items-center justify-center"
+      className="absolute right-0 top-0 flex h-screen w-screen items-center justify-center"
       role="status"
     >
       <svg
