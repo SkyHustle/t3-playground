@@ -13,7 +13,16 @@ const CreatePost = () => {
 
   const [input, setInput] = useState("");
 
-  const { mutate } = api.post.create.useMutation();
+  // grab the context of the trpc cache
+  const ctx = api.useUtils();
+
+  const { mutate, isLoading: isPosting } = api.post.create.useMutation({
+    onSuccess: () => {
+      setInput("");
+      // disregard(void) the promise since we don't need to wait for it
+      void ctx.post.getAll.invalidate();
+    },
+  });
 
   if (!user) {
     return null;
@@ -33,8 +42,8 @@ const CreatePost = () => {
         className="border border-slate-400 bg-transparent px-3"
         onClick={() => {
           mutate({ content: input });
-          setInput("");
         }}
+        disabled={isPosting}
       >
         Post
       </button>
