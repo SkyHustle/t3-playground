@@ -48,11 +48,13 @@ import { db } from "~/server/db";
  */
 export const createTRPCContext = (opts: CreateNextContextOptions) => {
   const { req } = opts;
-  const user = getAuth(req);
+  const sesh = getAuth(req);
+
+  const userId = sesh.userId;
 
   return {
     db,
-    currentUser: user,
+    userId,
   };
 };
 
@@ -103,9 +105,17 @@ export const publicProcedure = t.procedure;
 
 // make a private procedure that requires a user to be logged in
 const enforceUserIsAuthed = t.middleware(async ({ ctx, next }) => {
-  if (!ctx.currentUser) throw new TRPCError({ code: "UNAUTHORIZED" });
+  if (!ctx.userId) {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+    });
+  }
 
-  return next({ ctx: { currentUser: ctx.currentUser } });
+  return next({
+    ctx: {
+      userId: ctx.userId,
+    },
+  });
 });
 
 export const privateProcedure = t.procedure.use(enforceUserIsAuthed);
