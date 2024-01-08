@@ -23,8 +23,13 @@ const CreatePost = () => {
       // disregard(void) the promise since we don't need to wait for it
       void ctx.post.getAll.invalidate();
     },
-    onError: () => {
-      toast.error("Failed To Post, Only Emojis Allowed");
+    onError: (e) => {
+      const errorMessage = e.data?.zodError?.fieldErrors.content;
+      if (errorMessage?.[0]) {
+        toast.error(errorMessage[0]);
+      } else {
+        toast.error("Something went wrong");
+      }
     },
   });
 
