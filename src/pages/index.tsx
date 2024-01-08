@@ -45,8 +45,16 @@ const CreatePost = () => {
         className="grow border border-slate-400 bg-transparent px-3"
         type="text"
         value={input}
-        onChange={(e) => setInput(e.target.value)}
         disabled={isPosting}
+        onChange={(e) => setInput(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            if (input !== "") {
+              mutate({ content: input });
+            }
+          }
+        }}
       />
       <button
         className="border border-slate-400 bg-transparent px-3"
