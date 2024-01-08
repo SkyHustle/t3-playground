@@ -1,6 +1,12 @@
-export const LoadingSpinner = ({ size = 16 }: { size?: number }) => {
+export const LoadingSpinner = ({
+  size = 16,
+  className,
+}: {
+  size?: number;
+  className?: string;
+}) => {
   return (
-    <div className="" role="status">
+    <div className={className} role="status">
       <svg
         aria-hidden="true"
         className="inline animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
