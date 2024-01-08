@@ -46,6 +46,7 @@ const CreatePost = () => {
         type="text"
         value={input}
         onChange={(e) => setInput(e.target.value)}
+        disabled={isPosting}
       />
       <button
         className="border border-slate-400 bg-transparent px-3"
@@ -54,7 +55,7 @@ const CreatePost = () => {
         }}
         disabled={isPosting}
       >
-        Post
+        {isPosting ? <LoadingSpinner /> : "Post"}
       </button>
     </div>
   );
@@ -90,7 +91,12 @@ const PostView = (props: PostWithUser) => {
 const Feed = () => {
   const { data, isLoading } = api.post.getAll.useQuery();
 
-  if (isLoading) return <LoadingSpinner size={60} />;
+  if (isLoading)
+    return (
+      <div className="absolute right-0 top-0 flex h-screen w-screen items-center justify-center">
+        <LoadingSpinner size={60} />
+      </div>
+    );
   if (!data) return <div>Something went wrong...</div>;
 
   return (
