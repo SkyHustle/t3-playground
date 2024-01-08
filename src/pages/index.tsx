@@ -6,6 +6,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "next/image";
 import { LoadingSpinner } from "~/components/LoadingSpinner";
 import { useState } from "react";
+import toast from "react-hot-toast";
 dayjs.extend(relativeTime);
 
 const CreatePost = () => {
@@ -21,6 +22,9 @@ const CreatePost = () => {
       setInput("");
       // disregard(void) the promise since we don't need to wait for it
       void ctx.post.getAll.invalidate();
+    },
+    onError: () => {
+      toast.error("Failed To Post, Only Emojis Allowed");
     },
   });
 
