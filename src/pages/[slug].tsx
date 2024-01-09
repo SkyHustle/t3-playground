@@ -28,6 +28,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   return {
     props: {
       trpcState: ssg.dehydrate(),
+      username,
     },
   };
 };
@@ -36,12 +37,10 @@ export const getStaticPaths = () => {
   return { paths: [], fallback: "blocking" };
 };
 
-const ProfilePage: NextPage = () => {
-  const { data, isLoading } = api.profile.getUserByUsername.useQuery({
-    username: "skyhustle",
+const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
+  const { data } = api.profile.getUserByUsername.useQuery({
+    username,
   });
-
-  if (isLoading) return <div>Loading...</div>;
 
   if (!data) return <div>404 Not found</div>;
 
