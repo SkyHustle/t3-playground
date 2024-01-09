@@ -6,7 +6,7 @@ import Image from "next/image";
 import { LoadingSpinner } from "~/components/LoadingSpinner";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { type NextPage } from "next";
+import type { NextPage } from "next";
 import Link from "next/link";
 dayjs.extend(relativeTime);
 

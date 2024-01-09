@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { type NextPage } from "next";
+import type { NextPage } from "next";
 
 const SinglePostPage: NextPage = () => {
   return (
