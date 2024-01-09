@@ -6,6 +6,7 @@ import { createServerSideHelpers } from "@trpc/react-query/server";
 import { appRouter } from "~/server/api/root";
 import { db } from "~/server/db";
 import superjson from "superjson";
+import { PageLayout } from "~/components/layout";
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const ssg = createServerSideHelpers({
@@ -49,9 +50,9 @@ const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
       <Head>
         <title>Profile</title>
       </Head>
-      <main className="flex h-screen justify-center">
+      <PageLayout>
         <div className="">Profile View for @{data.username}</div>
-      </main>
+      </PageLayout>
     </>
   );
 };
