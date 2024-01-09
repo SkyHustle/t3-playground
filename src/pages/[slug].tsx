@@ -7,6 +7,7 @@ import { appRouter } from "~/server/api/root";
 import { db } from "~/server/db";
 import superjson from "superjson";
 import { PageLayout } from "~/components/layout";
+import Image from "next/image";
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const ssg = createServerSideHelpers({
@@ -51,7 +52,20 @@ const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
         <title>Profile</title>
       </Head>
       <PageLayout>
-        <div className="">Profile View for @{data.username}</div>
+        <div className="relative h-48  bg-slate-500">
+          <Image
+            className="absolute bottom-0 left-0 -mb-[64px] ml-6 rounded-full border-4 border-black"
+            src={data.profileImageUrl}
+            alt={`${data.username ?? ""}'s profile pic`}
+            width={128}
+            height={128}
+          />
+        </div>
+        <div className="h-[64px]"></div>
+        <div className="p-4 text-2xl font-bold">{`@${
+          data.username ?? ""
+        }`}</div>
+        <div className="w-full border-b border-slate-400"></div>
       </PageLayout>
     </>
   );
