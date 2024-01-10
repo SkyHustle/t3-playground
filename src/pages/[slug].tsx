@@ -8,11 +8,11 @@ import { db } from "~/server/db";
 import superjson from "superjson";
 import { PageLayout } from "~/components/layout";
 import Image from "next/image";
+import { LoadingSpinner } from "~/components/LoadingSpinner";
+import PostView from "~/components/postview";
 
 import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
-import { LoadingSpinner } from "~/components/LoadingSpinner";
-import PostView from "~/components/postview";
 dayjs.extend(relativeTime);
 
 export const getStaticProps: GetStaticProps = async (context) => {
