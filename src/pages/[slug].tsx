@@ -37,6 +37,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       trpcState: ssg.dehydrate(),
       username,
+      // could set custom refetch and revalidate times here
     },
   };
 };
