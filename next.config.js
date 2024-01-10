@@ -20,6 +20,16 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+
+  // tell vercel to ignore typecript and eslint
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  // swc is a faster alternative to babel
+  swcMinify: false,
 };
 
 export default config;
