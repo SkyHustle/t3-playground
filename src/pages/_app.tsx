@@ -3,6 +3,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { api } from "~/utils/api";
 import { Toaster } from "react-hot-toast";
 import Head from "next/head";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import "~/styles/globals.css";
 
@@ -16,6 +17,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
       </Head>
       <Toaster position="top-right" />
       <Component {...pageProps} />
+      <SpeedInsights />
     </ClerkProvider>
   );
 };

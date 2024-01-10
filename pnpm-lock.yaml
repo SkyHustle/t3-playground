@@ -35,9 +35,15 @@ dependencies:
   '@upstash/redis':
     specifier: ^1.28.0
     version: 1.28.0
+  '@vercel/speed-insights':
+    specifier: ^1.0.2
+    version: 1.0.2
   dayjs:
     specifier: ^1.11.10
     version: 1.11.10
+  i:
+    specifier: ^0.3.7
+    version: 0.3.7
   next:
     specifier: ^14.0.4
     version: 14.0.4(react-dom@18.2.0)(react@18.2.0)
@@ -894,6 +900,11 @@ packages:
     resolution: {integrity: sha512-vvFMUHGA5jUAXQHuAzFHNLD2TND/2aaf1BUPYBeg73CkQ9X+jorWVi7VGxZtRXPDEFJR9KvzuwCacbSproOKcw==}
     dependencies:
       crypto-js: 4.2.0
+    dev: false
+
+  /@vercel/speed-insights@1.0.2:
+    resolution: {integrity: sha512-y5HWeB6RmlyVYxJAMrjiDEz8qAIy2cit0fhBq+MD78WaUwQvuBnQlX4+5MuwVTWi46bV3klaRMq83u9zUy1KOg==}
+    requiresBuild: true
     dev: false
 
   /acorn-jsx@5.3.2(acorn@8.11.3):
@@ -2055,6 +2066,11 @@ packages:
     dependencies:
       function-bind: 1.1.2
     dev: true
+
+  /i@0.3.7:
+    resolution: {integrity: sha512-FYz4wlXgkQwIPqhzC5TdNMLSE5+GS1IIDJZY/1ZiEPCT2S3COUVZeT5OW4BmW4r5LHLQuOosSwsvnroG9GR59Q==}
+    engines: {node: '>=0.4'}
+    dev: false
 
   /ignore@5.3.0:
     resolution: {integrity: sha512-g7dmpshy+gD7mh88OC9NwSGTKoc3kyLAZQRU1mt53Aw/vnvfXnbC+F/7F7QoYVKbV+KNvJx8wArewKy1vXMtlg==}
