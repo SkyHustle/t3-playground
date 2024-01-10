@@ -12,6 +12,7 @@ import Image from "next/image";
 import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
 import { LoadingSpinner } from "~/components/LoadingSpinner";
+import PostView from "~/components/postview";
 dayjs.extend(relativeTime);
 
 export const getStaticProps: GetStaticProps = async (context) => {
@@ -59,22 +60,8 @@ const ProfileFeed = (props: { userId: string }) => {
 
   return (
     <div className="flex flex-col gap-3">
-      {data.map((post) => {
-        return (
-          <div
-            key={post.id}
-            className="flex gap-3 rounded-md border border-slate-400 p-3"
-          >
-            <div className="flex flex-col gap-1">
-              <div className="flex gap-1">
-                <span className="text-slate-400">
-                  {dayjs(post.createdAt).fromNow()}
-                </span>
-              </div>
-              <div>{post.content}</div>
-            </div>
-          </div>
-        );
+      {data.map((fullPost) => {
+        return <PostView key={fullPost.post.id} {...fullPost} />;
       })}
     </div>
   );

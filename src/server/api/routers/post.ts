@@ -10,6 +10,31 @@ import {
 } from "~/server/api/trpc";
 import { Ratelimit } from "@upstash/ratelimit"; // for deno: see above
 import { Redis } from "@upstash/redis"; // see below for cloudflare and fastly adapters
+import type { Post } from "@prisma/client";
+
+const addUserDataToPosts = async (posts: Post[]) => {
+  const users = (
+    await clerkClient.users.getUserList({
+      userId: posts.map((post: { authorId: string }) => post.authorId),
+      limit: 100,
+    })
+  ).map(filterUserForClient);
+
+  return posts.map((post) => {
+    const author = users.find((user) => user.id === post.authorId);
+
+    if (!author)
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Author not found",
+      });
+
+    return {
+      post,
+      author,
+    };
+  });
+};
 
 // Create a new ratelimiter, that allows 3 requests per 1 minute
 const ratelimit = new Ratelimit({
@@ -40,27 +65,7 @@ export const postRouter = createTRPCRouter({
       orderBy: { createdAt: "desc" },
     });
 
-    const users = (
-      await clerkClient.users.getUserList({
-        userId: posts.map((post: { authorId: string }) => post.authorId),
-        limit: 100,
-      })
-    ).map(filterUserForClient);
-
-    return posts.map((post) => {
-      const author = users.find((user) => user.id === post.authorId);
-
-      if (!author)
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Author not found",
-        });
-
-      return {
-        post,
-        author,
-      };
-    });
+    return addUserDataToPosts(posts);
   }),
 
   create: privateProcedure
@@ -101,6 +106,6 @@ export const postRouter = createTRPCRouter({
         take: 100,
       });
 
-      return posts;
+      return addUserDataToPosts(posts);
     }),
 });
