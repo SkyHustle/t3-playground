@@ -9,16 +9,18 @@ import "~/styles/globals.css";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
-    <ClerkProvider {...pageProps}>
-      <Head>
-        <title>T3 Playground</title>
-        <meta name="description" content="Playground for learning T3 Stack" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Toaster position="top-right" />
-      <Component {...pageProps} />
+    <>
+      <ClerkProvider {...pageProps}>
+        <Head>
+          <title>T3 Playground</title>
+          <meta name="description" content="Playground for learning T3 Stack" />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <Toaster position="top-right" />
+        <Component {...pageProps} />
+      </ClerkProvider>
       <SpeedInsights />
-    </ClerkProvider>
+    </>
   );
 };
 
