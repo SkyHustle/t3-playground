@@ -1,7 +1,16 @@
 import Head from "next/head";
 import type { NextPage } from "next";
+import { api } from "~/utils/api";
 
 const SinglePostPage: NextPage = () => {
+  const { data } = api.post.getPost.useQuery({
+    id: "8",
+  });
+
+  if (!data) return <div>Post does not exist</div>;
+
+  console.log(data);
+
   return (
     <>
       <Head>
