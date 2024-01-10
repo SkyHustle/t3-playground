@@ -9,6 +9,11 @@ import superjson from "superjson";
 import { PageLayout } from "~/components/layout";
 import Image from "next/image";
 
+import relativeTime from "dayjs/plugin/relativeTime";
+import dayjs from "dayjs";
+import { LoadingSpinner } from "~/components/LoadingSpinner";
+dayjs.extend(relativeTime);
+
 export const getStaticProps: GetStaticProps = async (context) => {
   const ssg = createServerSideHelpers({
     router: appRouter,
@@ -39,6 +44,42 @@ export const getStaticPaths = () => {
   return { paths: [], fallback: "blocking" };
 };
 
+const ProfileFeed = (props: { userId: string }) => {
+  const { data, isLoading } = api.post.getPostsByUserId.useQuery({
+    userId: props.userId,
+  });
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (!data || data.length === 0) {
+    return <div>User has No posts</div>;
+  }
+
+  return (
+    <div className="flex flex-col gap-3">
+      {data.map((post) => {
+        return (
+          <div
+            key={post.id}
+            className="flex gap-3 rounded-md border border-slate-400 p-3"
+          >
+            <div className="flex flex-col gap-1">
+              <div className="flex gap-1">
+                <span className="text-slate-400">
+                  {dayjs(post.createdAt).fromNow()}
+                </span>
+              </div>
+              <div>{post.content}</div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
 const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
   const { data } = api.profile.getUserByUsername.useQuery({
     username,
@@ -66,6 +107,7 @@ const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
           data.username ?? ""
         }`}</div>
         <div className="w-full border-b border-slate-400"></div>
+        <ProfileFeed userId={data.id} />
       </PageLayout>
     </>
   );

@@ -1,7 +1,5 @@
 import { SignInButton, useUser, UserButton } from "@clerk/nextjs";
 import { type RouterOutputs, api } from "~/utils/api";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "next/image";
 import { LoadingSpinner } from "~/components/LoadingSpinner";
 import { useState } from "react";
@@ -9,6 +7,9 @@ import toast from "react-hot-toast";
 import type { NextPage } from "next";
 import Link from "next/link";
 import { PageLayout } from "~/components/layout";
+
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
 const CreatePost: NextPage = () => {
