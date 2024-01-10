@@ -51,7 +51,12 @@ const ProfileFeed = (props: { userId: string }) => {
   });
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    return (
+      <LoadingSpinner
+        size={60}
+        className="absolute right-0 top-0 flex h-screen w-screen items-center justify-center"
+      />
+    );
   }
 
   if (!data || data.length === 0) {
